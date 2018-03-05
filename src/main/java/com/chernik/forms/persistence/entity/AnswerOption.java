@@ -14,9 +14,6 @@ public class AnswerOption {
     @Column(nullable = false)
     private String answer;
 
-    @Column(nullable = false)
-    private Integer positionNumber;
-
     @Column(name = "question_id", insertable = false, updatable = false)
     private Long questionId;
 }

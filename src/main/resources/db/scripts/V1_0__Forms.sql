@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 )
   ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `form` (
+CREATE TABLE IF NOT EXISTS `formEntity` (
   `form_id`       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name`          VARCHAR(64)     NOT NULL,
   `description`   VARCHAR(512)    NULL,
@@ -27,18 +27,16 @@ CREATE TABLE IF NOT EXISTS `form` (
 
 
 CREATE TABLE IF NOT EXISTS `question` (
-  `question_id`      BIGINT UNSIGNED                 NOT NULL AUTO_INCREMENT,
-  `text`             VARCHAR(512)                    NULL,
-  `position_number`  INT                             NOT NULL,
-  `type`             ENUM ('OPEN', 'RADIO', 'CHECK') NOT NULL,
-  `has_other_option` BIT(1)                          NOT NULL DEFAULT 0,
-  `form_id`          BIGINT UNSIGNED                 NOT NULL,
+  `question_id` BIGINT UNSIGNED                 NOT NULL AUTO_INCREMENT,
+  `text`        VARCHAR(512)                    NULL,
+  `type`        ENUM ('OPEN', 'RADIO', 'CHECK') NOT NULL,
+  `form_id`     BIGINT UNSIGNED                 NOT NULL,
   PRIMARY KEY (`question_id`),
   UNIQUE INDEX `question_id_UNIQUE` (`question_id` ASC),
   INDEX `fk_question_form1_idx` (`form_id` ASC),
   CONSTRAINT `fk_question_form1`
   FOREIGN KEY (`form_id`)
-  REFERENCES `form` (`form_id`)
+  REFERENCES `formEntity` (`form_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -47,7 +45,6 @@ CREATE TABLE IF NOT EXISTS `question` (
 CREATE TABLE IF NOT EXISTS `answer_option` (
   `answer_option_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `answer`           VARCHAR(256)    NOT NULL,
-  `position_number`  INT             NOT NULL,
   `question_id`      BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`answer_option_id`),
   UNIQUE INDEX `answer_option_id_UNIQUE` (`answer_option_id` ASC),
@@ -61,10 +58,11 @@ CREATE TABLE IF NOT EXISTS `answer_option` (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `answer` (
-  `answer_id`            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `simple_answer`        VARCHAR(256)    NULL,
-  `user_id`              BIGINT UNSIGNED NOT NULL,
-  `question_id` BIGINT UNSIGNED NOT NULL,
+  `answer_id`     BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `simple_answer` VARCHAR(256)    NULL,
+  `user_id`       BIGINT UNSIGNED NOT NULL,
+  `question_id`   BIGINT UNSIGNED NOT NULL,
+  `answer_option` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`answer_id`),
   UNIQUE INDEX `answer_id_UNIQUE` (`answer_id` ASC),
   INDEX `fk_answer_user1_idx` (`user_id` ASC),
@@ -77,6 +75,11 @@ CREATE TABLE IF NOT EXISTS `answer` (
   CONSTRAINT `fk_answer_question1`
   FOREIGN KEY (`question_id`)
   REFERENCES `question` (`question_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_answer_question1`
+  FOREIGN KEY (`answer_id`)
+  REFERENCES `answer_option` (`answer_option_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )

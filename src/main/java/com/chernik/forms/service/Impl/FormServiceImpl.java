@@ -1,7 +1,7 @@
 package com.chernik.forms.service.Impl;
 
 import com.chernik.forms.exception.BaseException;
-import com.chernik.forms.persistence.entity.Form;
+import com.chernik.forms.persistence.entity.FormEntity;
 import com.chernik.forms.persistence.jparepository.FormRepository;
 import com.chernik.forms.service.FormService;
 import com.chernik.forms.validator.FormCreateValidator;
@@ -27,14 +27,14 @@ public class FormServiceImpl implements FormService {
 
     @Override
     @Transactional
-    public Form create(Form form) throws BaseException {
-        formCreateValidator.validate(form);
-        formRepository.save(form);
-        return form;
+    public FormEntity create(FormEntity formEntity) throws BaseException {
+        formCreateValidator.validate(formEntity);
+        formRepository.save(formEntity);
+        return formEntity;
     }
 
     @Override
-    public Form update(From form) {
+    public FormEntity update(From form) {
         return null;
     }
 
@@ -44,7 +44,7 @@ public class FormServiceImpl implements FormService {
     }
 
     @Override
-    public Form getById(Long id) {
+    public FormEntity getById(Long id) {
         return null;
     }
 

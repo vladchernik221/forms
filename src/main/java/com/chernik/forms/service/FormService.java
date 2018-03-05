@@ -1,16 +1,16 @@
 package com.chernik.forms.service;
 
 import com.chernik.forms.exception.BaseException;
-import com.chernik.forms.persistence.entity.Form;
+import com.chernik.forms.persistence.entity.FormEntity;
 
 import javax.persistence.criteria.From;
 
 public interface FormService {
-    Form create(Form form) throws BaseException;
+    FormEntity create(FormEntity formEntity) throws BaseException;
 
-    Form update(From form);
+    FormEntity update(From form);
 
     void delete(Long id);
 
-    Form getById(Long id);
+    FormEntity getById(Long id);
 }

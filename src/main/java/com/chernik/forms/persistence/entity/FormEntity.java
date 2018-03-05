@@ -8,7 +8,8 @@ import java.util.List;
 
 @Data
 @Entity
-public class Form {
+@Table(name = "form")
+public class FormEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long formId;

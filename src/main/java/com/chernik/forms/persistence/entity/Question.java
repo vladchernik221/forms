@@ -15,12 +15,6 @@ public class Question {
     @Column(nullable = false)
     private String text;
 
-    @Column(nullable = false)
-    private Integer positionNumber;
-
-    @Column(nullable = false)
-    private Boolean hasOtherOption;
-
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM ('OPEN', 'RADIO', 'CHECK')")
     private QuestionType type;
