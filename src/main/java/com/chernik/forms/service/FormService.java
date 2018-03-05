@@ -1,16 +1,12 @@
 package com.chernik.forms.service;
 
-import com.chernik.forms.exception.BaseException;
-import com.chernik.forms.persistence.entity.FormEntity;
-
-import javax.persistence.criteria.From;
+import com.chernik.forms.api.dto.FormDto;
+import com.chernik.forms.exception.EntityNotFoundException;
 
 public interface FormService {
-    FormEntity create(FormEntity formEntity) throws BaseException;
+    FormDto create(FormDto formDto);
 
-    FormEntity update(From form);
+    FormDto update(FormDto formDto) throws EntityNotFoundException;
 
-    void delete(Long id);
-
-    FormEntity getById(Long id);
+    FormDto getById(Long id) throws EntityNotFoundException;
 }

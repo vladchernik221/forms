@@ -7,7 +7,8 @@ import java.util.List;
 
 @Data
 @Entity
-public class Question {
+@Table(name = "question")
+public class QuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
@@ -24,5 +25,5 @@ public class Question {
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id", nullable = false)
-    private List<AnswerOption> answerOptions;
+    private List<AnswerOptionEntity> answerOptions;
 }

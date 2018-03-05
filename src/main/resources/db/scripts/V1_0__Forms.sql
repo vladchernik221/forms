@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 )
   ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `formEntity` (
+CREATE TABLE IF NOT EXISTS `form` (
   `form_id`       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name`          VARCHAR(64)     NOT NULL,
+  `name`          VARCHAR(256)    NOT NULL,
   `description`   VARCHAR(512)    NULL,
   `creation_date` DATETIME        NULL     DEFAULT CURRENT_TIMESTAMP,
   `author_id`     BIGINT UNSIGNED NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `question` (
   INDEX `fk_question_form1_idx` (`form_id` ASC),
   CONSTRAINT `fk_question_form1`
   FOREIGN KEY (`form_id`)
-  REFERENCES `formEntity` (`form_id`)
+  REFERENCES `form` (`form_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 )
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `answer` (
   `simple_answer` VARCHAR(256)    NULL,
   `user_id`       BIGINT UNSIGNED NOT NULL,
   `question_id`   BIGINT UNSIGNED NOT NULL,
-  `answer_option` BIGINT UNSIGNED NOT NULL,
+  `answer_option_id` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`answer_id`),
   UNIQUE INDEX `answer_id_UNIQUE` (`answer_id` ASC),
   INDEX `fk_answer_user1_idx` (`user_id` ASC),
@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `answer` (
   REFERENCES `question` (`question_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_answer_question1`
-  FOREIGN KEY (`answer_id`)
+  CONSTRAINT `fk_answer_answer_option1`
+  FOREIGN KEY (`answer_option_id`)
   REFERENCES `answer_option` (`answer_option_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION

@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Answer {
+@Table(name = "answer")
+public class AnswerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
@@ -19,5 +20,9 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "questionId", nullable = false)
-    private Question question;
+    private QuestionEntity question;
+
+    @ManyToOne
+    @JoinColumn(name = "answer_option_id", referencedColumnName = "answerOptionId", nullable = false)
+    private AnswerOptionEntity answerOption;
 }

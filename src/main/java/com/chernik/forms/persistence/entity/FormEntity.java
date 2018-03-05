@@ -24,7 +24,7 @@ public class FormEntity {
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "form_id", nullable = false)
-    private List<Question> questions;
+    private List<QuestionEntity> questions;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "userId", nullable = false)

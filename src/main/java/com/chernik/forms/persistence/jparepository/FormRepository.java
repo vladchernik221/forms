@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface FormRepository extends JpaRepository<FormEntity, Long> {
-    Optional<FormEntity> findByName(String name);
+    Optional<FormEntity> findByFormId(Long formId);
 }

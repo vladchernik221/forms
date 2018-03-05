@@ -1,51 +1,65 @@
 package com.chernik.forms.service.Impl;
 
-import com.chernik.forms.exception.BaseException;
+import com.chernik.forms.api.dto.FormDto;
+import com.chernik.forms.exception.EntityNotFoundException;
+import com.chernik.forms.exception.EntityType;
 import com.chernik.forms.persistence.entity.FormEntity;
 import com.chernik.forms.persistence.jparepository.FormRepository;
 import com.chernik.forms.service.FormService;
-import com.chernik.forms.validator.FormCreateValidator;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.From;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class FormServiceImpl implements FormService {
 
     private final FormRepository formRepository;
 
-    private final FormCreateValidator formCreateValidator;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public FormServiceImpl(FormRepository formRepository, FormCreateValidator formCreateValidator) {
+    public FormServiceImpl(FormRepository formRepository, ModelMapper modelMapper) {
         this.formRepository = formRepository;
-        this.formCreateValidator = formCreateValidator;
+        this.modelMapper = modelMapper;
     }
 
 
     @Override
     @Transactional
-    public FormEntity create(FormEntity formEntity) throws BaseException {
-        formCreateValidator.validate(formEntity);
-        formRepository.save(formEntity);
-        return formEntity;
+    public FormDto create(FormDto formDto) {
+        FormEntity formEntity = modelMapper.map(formDto, FormEntity.class);
+        FormEntity savedFormEntity = formRepository.save(formEntity);
+        return modelMapper.map(savedFormEntity, FormDto.class);
     }
 
     @Override
-    public FormEntity update(From form) {
-        return null;
+    @Transactional
+    public FormDto update(FormDto formDto) throws EntityNotFoundException {
+        FormEntity formEntity = modelMapper.map(formDto, FormEntity.class);
+
+        Optional<FormEntity> foundFormEntity = formRepository.findByFormId(formEntity.getFormId());
+
+        if (!foundFormEntity.isPresent()) {
+            throw new EntityNotFoundException(formEntity.getFormId(), EntityType.FORM);
+        }
+
+        FormEntity savedFormEntity = formRepository.save(formEntity);
+        return modelMapper.map(savedFormEntity, FormDto.class);
     }
 
     @Override
-    public void delete(Long id) {
+    @Transactional
+    public FormDto getById(Long id) throws EntityNotFoundException {
+        Optional<FormEntity> formEntity = formRepository.findByFormId(id);
 
-    }
+        if (!formEntity.isPresent()) {
+            throw new EntityNotFoundException(id, EntityType.FORM);
+        }
 
-    @Override
-    public FormEntity getById(Long id) {
-        return null;
+        return modelMapper.map(formEntity.get(), FormDto.class);
     }
 
 
