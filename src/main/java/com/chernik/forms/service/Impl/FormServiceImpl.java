@@ -7,10 +7,13 @@ import com.chernik.forms.persistence.entity.FormEntity;
 import com.chernik.forms.persistence.jparepository.FormRepository;
 import com.chernik.forms.service.FormService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,5 +65,12 @@ public class FormServiceImpl implements FormService {
         return modelMapper.map(formEntity.get(), FormDto.class);
     }
 
-
+    @Override
+    @Transactional
+    public List<FormDto> getAll() {
+        Type listType = new TypeToken<List<FormEntity>>() {
+        }.getType();
+        List<FormEntity> formEntities = formRepository.findAll();
+        return modelMapper.map(formEntities, listType);
+    }
 }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Forms</title>
+
+    <link rel="stylesheet" href="/css/lib/angular-material.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="/js/lib/angular.min.js"></script>
+    <script src="/js/lib/angular-animate.min.js"></script>
+    <script src="/js/lib/angular-aria.min.js"></script>
+    <script src="/js/lib/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="/js/lib/angular-material.min.js"></script>
+
+    <!-- Application  -->
+    <link rel="stylesheet" href="/css/form-style.css" />
+
+    <script src="/js/form_controller.js"></script>
+</head>
+<body ng-app="FormsApp" ng-controller="FormsController" ng-cloak>
+<header>
+    <h1>Forms creator</h1>
+</header>
+<form name="form_name" layout="column" class="content">
+    <md-input-container>
+        <input required
+               md-maxlength="254"
+               ng-model="form.name"
+               placeholder="Form name" />
+    </md-input-container>
+    <md-input-container>
+        <textarea required
+                  md-maxlength="254"
+                  ng-model="form.description"
+                  placeholder="Form description">
+        </textarea>
+    </md-input-container>
+
+    <md-card ng-repeat="question in form.questions" >
+        <md-card-content>
+            <div layout="row" layout-align="space-between start">
+                <md-input-container flex="45">
+                    <textarea required
+                              md-maxlength="254"
+                              ng-model="question.text">
+                    </textarea>
+                </md-input-container>
+                <md-input-container flex="45">
+                    <md-select ng-model="question.type" placeholder="Select the type of question">
+                        <md-option ng-value="'OPEN'">Open</md-option>
+                        <md-option ng-value="'RADIO'">Radio button</md-option>
+                        <md-option ng-value="'CHECK'">Check box</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div ng-if="question.type=='OPEN'" layout="column">
+                <md-input-container>
+                    <input ng-disabled="true" placeholder="Place for answer" />
+                </md-input-container>
+            </div>
+            <div ng-if="question.type=='RADIO'" layout="column">
+                <md-input-container ng-repeat="option in question.answerOptions">
+                    <md-icon md-font-icon="material-icons" aria-label="Unchecked radio button">radio_button_unchecked</md-icon>
+                    <input required
+                           md-maxlength="254"
+                           ng-model="option.answer" />
+                    <md-icon md-font-icon="material-icons" ng-click="removeOption(question, option)">clear</md-icon>
+                </md-input-container>
+                <md-button ng-click="addOption(question)" class="md-primary md-raised">Add option</md-button>
+            </div>
+            <div ng-if="question.type=='CHECK'" layout="column">
+                <md-input-container ng-repeat="option in question.answerOptions">
+                    <md-icon md-font-icon="material-icons" aria-label="Unchecked checkbox">check_box_outline_blank</md-icon>
+                    <input required
+                           md-maxlength="254"
+                           ng-model="option.answer" />
+                    <md-icon md-font-icon="material-icons" ng-click="removeOption(question, option)">clear</md-icon>
+                </md-input-container>
+                <md-button ng-click="addOption(question)" class="md-primary md-raised">Add option</md-button>
+            </div>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-align="center center">
+        <md-button ng-click="addQuestion()" class="md-primary md-raised">Add question</md-button>
+        <md-button ng-click="saveForm()" class="md-primary md-raised">Save form</md-button>
+    </div>
+</form>
+</body>
+</html>

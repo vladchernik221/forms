@@ -9,13 +9,12 @@ import javax.validation.constraints.NotNull;
 @Data
 public class AnswerOptionDto {
 
-    @NotNull(groups = {Version1Checks.class})
     private Long answerOptionId;
 
     @NotEmpty
-    @Length(max = 256, groups = {Version1Checks.class, Version2Checks.class})
+    @Length(max = 256, groups = {UpdateChecks.class, CreateChecks.class})
     private String answer;
 
-    @NotNull(groups = {Version1Checks.class, Version2Checks.class})
+    @NotNull(groups = {UpdateChecks.class, CreateChecks.class})
     private Long questionId;
 }

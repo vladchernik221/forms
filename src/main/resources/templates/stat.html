@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forms</title>
+
+    <link rel="stylesheet" href="/css/lib/angular-material.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <!-- Application  -->
+    <link rel="stylesheet" href="/css/form-style.css" />
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="/js/lib/angular.min.js"></script>
+    <script src="/js/lib/angular-animate.min.js"></script>
+    <script src="/js/lib/angular-aria.min.js"></script>
+    <script src="/js/lib/angular-messages.min.js"></script>
+
+    <script src="https://www.google.com/jsapi?ext.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="/js/lib/angular-material.min.js"></script>
+
+    <script src="/js/stat_controller.js"></script>
+</head>
+<body ng-controller="StatController" ng-cloak>
+<header>
+    <h1>{{form.name}}</h1>
+    <p>{{form.description}}</p>
+</header>
+<form name="quiz_form" layout="column" class="content">
+    <md-card ng-repeat="question in form.questions">
+        <md-card-content>
+            <h2>{{question.quest}}</h2>
+            <pie-chart data="question.data" width="800" height="500" select="selectRow(selectedRowIndex)"></pie-chart>
+        </md-card-content>
+    </md-card>
+</form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Forms</title>
+
+    <link rel="stylesheet" href="/css/lib/angular-material.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="/js/lib/angular.min.js"></script>
+    <script src="/js/lib/angular-animate.min.js"></script>
+    <script src="/js/lib/angular-aria.min.js"></script>
+    <script src="/js/lib/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="/js/lib/angular-material.min.js"></script>
+
+    <!-- Application  -->
+    <link rel="stylesheet" href="/css/form-style.css" />
+
+    <script src="/js/quiz_controller.js"></script>
+</head>
+<body ng-app="FormsApp" ng-controller="QuizController" ng-cloak>
+<header>
+    <h1>{{form.name}}</h1>
+    <p>{{form.description}}</p>
+</header>
+<form name="quiz_form" layout="column" class="content">
+    <md-card ng-repeat="question in form.questions">
+        <md-card-content>
+            <h2>{{question.text}}</h2>
+            <div ng-if="question.type=='RADIO'" layout="column">
+                <md-radio-group ng-model="answers[question.questionId]" required>
+                    <md-radio-button ng-repeat="option in question.answerOptions" ng-value="option.answerOptionId">
+                        {{option.answer}}
+                    </md-radio-button>
+                </md-radio-group>
+            </div>
+            <div ng-if="question.type=='CHECK'" layout="column">
+                <div ng-repeat="option in question.answerOptions" >
+                    <md-checkbox ng-model="answers[question.questionId][option.answerOptionId]">
+                        {{option.answer}}
+                    </md-checkbox>
+                </div>
+            </div>
+            <div ng-if="question.type=='OPEN'" layout="column">
+                <md-input-container>
+                    <input ng-model="answers[question.questionId].text" required/>
+                </md-input-container>
+            </div>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-align="center center">
+        <md-button ng-click="sendForm()" class="md-primary md-raised">Send form</md-button>
+    </div>
+</form>
+</body>
+</html>

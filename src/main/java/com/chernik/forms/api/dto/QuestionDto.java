@@ -12,17 +12,17 @@ import java.util.List;
 @Data
 public class QuestionDto {
 
-    @NotNull(groups = {Version1Checks.class})
+    @NotNull(groups = {UpdateChecks.class})
     private Long questionId;
 
     @NotEmpty
-    @Length(max = 512, groups = {Version1Checks.class, Version2Checks.class})
+    @Length(max = 512, groups = {UpdateChecks.class, CreateChecks.class})
     private String text;
 
-    @NotNull(groups = {Version1Checks.class, Version2Checks.class})
+    @NotNull(groups = {UpdateChecks.class, CreateChecks.class})
     private QuestionType type;
 
-    @NotNull(groups = {Version1Checks.class, Version2Checks.class})
+    @NotNull(groups = {UpdateChecks.class, CreateChecks.class})
     private Long formId;
 
     private List<AnswerOptionDto> answerOptions = new ArrayList<>();
