@@ -30,22 +30,22 @@ function FormsController($scope) {
     function convertAnswers() {
         var convertedAnswers = [];
         $scope.answers.forEach(function (answer, index) {
-            if (Array.isArray(answer)) {
-                answer.forEach(function (option, option_index) {
+            if (answer.options !== undefined) {
+                for (var option in answer.options) {
                     convertedAnswers.push({
                         question: {questionId: index},
-                        answerOption: {answerOptionId: option_index}
+                        answerOption: {answerOptionId: option}
                     });
-                });
-            } else if (answer.text === undefined) {
+                }
+            } else if (answer.text !== undefined) {
                 convertedAnswers.push({
                     question: {questionId: index},
-                    answerOption: {answerOptionId: answer}
+                    simpleAnswer: answer.text
                 });
             } else {
                 convertedAnswers.push({
                     question: {questionId: index},
-                    simpleAnswer: answer.text
+                    answerOption: {answerOptionId: answer}
                 });
             }
         });

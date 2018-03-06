@@ -19,6 +19,5 @@ public class AnswerDto {
     @NotEmpty
     private QuestionDto question;
 
-    @NotEmpty
     private AnswerOptionDto answerOption;
 }

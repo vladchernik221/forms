@@ -40,7 +40,7 @@
             </div>
             <div ng-if="question.type=='CHECK'" layout="column">
                 <div ng-repeat="option in question.answerOptions" >
-                    <md-checkbox ng-model="answers[question.questionId][option.answerOptionId]">
+                    <md-checkbox ng-model="answers[question.questionId].options[option.answerOptionId]">
                         {{option.answer}}
                     </md-checkbox>
                 </div>

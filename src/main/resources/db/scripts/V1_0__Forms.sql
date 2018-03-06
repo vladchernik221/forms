@@ -58,11 +58,11 @@ CREATE TABLE IF NOT EXISTS `answer_option` (
   ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `answer` (
-  `answer_id`     BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `simple_answer` VARCHAR(256)    NULL,
-  `user_id`       BIGINT UNSIGNED NOT NULL,
-  `question_id`   BIGINT UNSIGNED NOT NULL,
-  `answer_option_id` BIGINT UNSIGNED NOT NULL,
+  `answer_id`        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `simple_answer`    VARCHAR(256)    NULL,
+  `user_id`          BIGINT UNSIGNED,
+  `question_id`      BIGINT UNSIGNED NOT NULL,
+  `answer_option_id` BIGINT UNSIGNED,
   PRIMARY KEY (`answer_id`),
   UNIQUE INDEX `answer_id_UNIQUE` (`answer_id` ASC),
   INDEX `fk_answer_user1_idx` (`user_id` ASC),

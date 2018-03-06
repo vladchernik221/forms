@@ -23,6 +23,6 @@ public class AnswerEntity {
     private QuestionEntity question;
 
     @ManyToOne
-    @JoinColumn(name = "answer_option_id", referencedColumnName = "answerOptionId", nullable = false)
+    @JoinColumn(name = "answer_option_id", referencedColumnName = "answerOptionId")
     private AnswerOptionEntity answerOption;
 }
